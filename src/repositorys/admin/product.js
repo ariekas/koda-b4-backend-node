@@ -9,3 +9,9 @@ export async function create(data) {
 export async function list() {
     return await prisma.product.findMany()
 }
+
+export async function detail(id) {
+    return await prisma.product.findUnique({
+        where: {id : Number(id)},
+    })
+}
