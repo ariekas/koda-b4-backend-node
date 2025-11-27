@@ -17,13 +17,23 @@ POST /auth/register
 
 POST /admin/product
 {
-  "name": "Es Teh",
-  "price": 5000,
-  "description": "Teh segar dingin",
-  "stock": 20,
-  "isFavorite": true
+  "name":
+  "price":
+  "description": 
+  "stock":
+  "isFavorite":
 }
 
 GET /admin/products
 
+GET /admin/product/:id
+
+PATCH /admin/product/:id
+{
+  "name": 
+  "price":
+  "description": 
+  "stock": 
+  "isFavorite":
+}
     
