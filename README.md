@@ -37,3 +37,4 @@ PATCH /admin/product/:id
   "isFavorite":
 }
     
+DELETE /admin/product/:id

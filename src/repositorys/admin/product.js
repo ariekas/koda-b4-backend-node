@@ -23,10 +23,21 @@ export async function edit(id, data) {
     throw new Error("Product tidak ditemukan");
   }
 
-  const update = await prisma.product.update({
+  return await prisma.product.update({
     where: { id: Number(id) },
     data: { ...data },
   });
 
-  return update;
+}
+
+export async function deleted(id) {
+    const product = await detail(id);
+
+  if (!product) {
+    throw new Error("Product tidak ditemukan");
+  }
+
+  return await prisma.product.delete({
+    where : {id : Number(id)}
+  })
 }

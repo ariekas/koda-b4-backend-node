@@ -1,4 +1,4 @@
-import { create, detail, edit, list } from "../../repositorys/admin/product.js";
+import { create, deleted, detail, edit, list } from "../../repositorys/admin/product.js";
 
 export async function createProduct(req, res) {
   try {
@@ -86,11 +86,28 @@ export async function editProduct(req, res) {
         const product = await edit(req.params.id, req.body)
         return res.status(200).json({
             success: true,
-            message: "Product berhasil diupdate",
+            message: "success update product",
             data: product,
           });
     } catch (error) {
         res.status(500).json({
+            success: false,
+            message: "Error Server",
+            error: error.message,
+          });
+    }
+}
+
+export async function deleteProduct(req, res) {
+    try {
+        const product = await deleted(req.params.id)
+
+        return res.status(200).json({
+            success: true,
+            message: "success deleted product",
+          });
+    } catch (error) {
+          res.status(500).json({
             success: false,
             message: "Error Server",
             error: error.message,
