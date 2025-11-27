@@ -31,8 +31,8 @@ model User {
   email String @unique
   password String 
   role Role @default(user)
-  created_at DateTime
-  updated_at DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("users")
 } 
@@ -40,8 +40,8 @@ model User {
 model Category{
   id Int @id @default(autoincrement())
   name String @unique
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("categorys")
 }
@@ -55,8 +55,8 @@ model Product{
   stock Int
   isFlashsale Boolean @default(false)
   isFavorite Boolean @default(false)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("products")
 }
@@ -64,8 +64,8 @@ model Product{
 model Product_image {
   id Int @id @default(autoincrement())
   image String 
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("product_images")
 }
@@ -74,8 +74,8 @@ model Size_product {
   id Int @id @default(autoincrement())
   name String
   costs Float @default(0)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("size_products")
 }
@@ -84,8 +84,8 @@ model Variant {
   id Int @id @default(autoincrement())
   name String
   costs Float @default(0)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("variants")
 }
@@ -94,8 +94,8 @@ model Tax {
   id Int @id @default(autoincrement())
   name String
   tax Float @default(0)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("taxs")
 }
@@ -103,8 +103,8 @@ model Tax {
 model Cart{
   id Int @id @default(autoincrement())
   quantity Int 
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("carts")
 }
@@ -113,8 +113,8 @@ model Delivery{
   id Int @id @default(autoincrement())
   name String
   costs Float @default(0)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("deliverys")
 }
@@ -123,8 +123,8 @@ model Payment_method{
   id Int @id @default(autoincrement())
   name String
   image String?
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("payment_methods")
 }
@@ -132,8 +132,8 @@ model Payment_method{
 model Status_transaction{
   id Int @id @default(autoincrement())
   status Status @default(pending)
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("status_transactions")
 }
@@ -146,8 +146,8 @@ model Transactions{
   email_address String
   total Float
   invoice_num String
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("transactions")
 }
@@ -156,8 +156,8 @@ model Transaction_item{
   id Int @id @default(autoincrement())
   quantity Int
   subtotal Float
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("transaction_items")
 }
@@ -166,8 +166,8 @@ model Rating{
   id Int @id @default(autoincrement())
   review String
   rating Int
-  created_at DateTime
-  updated_at DateTime
+   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("ratings")
 }
