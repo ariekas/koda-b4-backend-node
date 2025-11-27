@@ -6,23 +6,14 @@ import bcrypt from "bcrypt";
 
 export async function register(req, res) {
   try {
-    const { fullname, email, password } = req.body;
-
-    if (!fullname || !email || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "fullname, email dan password wajib diisi",
-      });
-    }
-
-    if (password.length < 6) {
+    if (req.body.password.length < 6) {
       return res.status(400).json({
         success: false,
         message: "Password minimal 6 karakter",
       });
     }
 
-    const extUser = await findUser(email);
+    const extUser = await findUser(req.body.email);
     if (extUser) {
       res.status(400).json({
         success: false,
@@ -30,7 +21,8 @@ export async function register(req, res) {
       });
       return;
     }
-    const user = await create(fullname, email, password);
+
+    const user = await create(req.body);
     res.status(201).json({
       success: true,
       message: "Success register",
@@ -49,9 +41,7 @@ export async function register(req, res) {
 
 export async function login(req, res) {
   try {
-    const { email, password } = req.body;
-
-    const user = await findUser(email);
+    const user = await findUser(req.body.email);
     if (!user) {
       res.status(404).json({
         success: false,
@@ -60,7 +50,7 @@ export async function login(req, res) {
       return;
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
     if (!isValidPassword) {
     res.status(401).json({
         success: false,

@@ -7,13 +7,14 @@ export async function findUser(email) {
   });
 }
 
-export async function create(fullname, email, password) {
-    const hash = await bcrypt.hash(password, 10)
+export async function create(data) {
+    const hash = await bcrypt.hash(data.password, 10);
+  
     return await prisma.user.create({
-        data :{
-            fullname,
-            email,
-            password : hash
-        }
-    })
-}
+      data: {
+        fullname: data.fullname,
+        email: data.email,
+        password: hash,
+      },
+    });
+  }

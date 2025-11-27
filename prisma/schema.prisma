@@ -50,7 +50,7 @@ model Product{
   id Int @id @default(autoincrement())
   name String
   price Float 
-  price_discount Float
+  price_discount Float @default(0)
   description String
   stock Int
   isFlashsale Boolean @default(false)
