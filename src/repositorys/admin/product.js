@@ -6,3 +6,6 @@ export async function create(data) {
     });
   }
   
+export async function list() {
+    return await prisma.product.findMany()
+}

@@ -1,4 +1,4 @@
-import { create } from "../../repositorys/admin/product.js";
+import { create, list } from "../../repositorys/admin/product.js";
 
 export async function createProduct(req, res) {
   try {
@@ -29,4 +29,29 @@ export async function createProduct(req, res) {
       error: error.message,
     });
   }
+}
+
+export async function getAll(req, res) {
+    try {
+        const product = await list(req.body)
+        if(!product) {
+            res.status(404).json({
+                success : false,
+                message: "product not found"
+            })
+            return
+        }
+
+        res.status(201).json({
+            success: true,
+            message: "success getting list product",
+            data: product
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error Server",
+            error: error.message,
+          });
+    }
 }
