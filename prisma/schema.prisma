@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum Status{
+  pending
+  onProgress
+  complete
+  cancel
+}
+
+model User {
+  id  Int @id @default(autoincrement())
+  fullname String 
+  email String @unique
+  password String 
+  role Role @default(user)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("users")
+} 
+
+model Category{
+  id Int @id @default(autoincrement())
+  name String @unique
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("categorys")
+}
+
+model Product{
+  id Int @id @default(autoincrement())
+  name String
+  price Float 
+  price_discount Float
+  description String
+  stock Int
+  isFlashsale Boolean @default(false)
+  isFavorite Boolean @default(false)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("products")
+}
+
+model Product_image {
+  id Int @id @default(autoincrement())
+  image String 
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("product_images")
+}
+
+model Size_product {
+  id Int @id @default(autoincrement())
+  name String
+  costs Float @default(0)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("size_products")
+}
+
+model Variant {
+  id Int @id @default(autoincrement())
+  name String
+  costs Float @default(0)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("variants")
+}
+
+model Tax {
+  id Int @id @default(autoincrement())
+  name String
+  tax Float @default(0)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("taxs")
+}
+
+model Cart{
+  id Int @id @default(autoincrement())
+  quantity Int 
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("carts")
+}
+
+model Delivery{
+  id Int @id @default(autoincrement())
+  name String
+  costs Float @default(0)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("deliverys")
+}
+
+model Payment_method{
+  id Int @id @default(autoincrement())
+  name String
+  image String?
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("payment_methods")
+}
+
+model Status_transaction{
+  id Int @id @default(autoincrement())
+  status Status @default(pending)
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("status_transactions")
+}
+
+model Transactions{
+  id Int @id @default(autoincrement())
+  name_user String
+  address_user String
+  phone_address String
+  email_address String
+  total Float
+  invoice_num String
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("transactions")
+}
+
+model Transaction_item{
+  id Int @id @default(autoincrement())
+  quantity Int
+  subtotal Float
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("transaction_items")
+}
+
+model Rating{
+  id Int @id @default(autoincrement())
+  review String
+  rating Int
+  created_at DateTime
+  updated_at DateTime
+
+  @@map("ratings")
+}
