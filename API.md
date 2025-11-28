@@ -27,14 +27,7 @@ Just Sruput adalah aplikasi backend e commerce yang memiliki 2 role utama user d
 }
 ```
 
-## Admin
-| Method | Endpoint | Deskripsi |
-|--------|----------|-----------|
-|GET| /admin/products | List product |
-|GET|/admin/product/:id|Detail Product|
-|POST|/admin/product/|Membuat product|
-|PATCH|/admin/product/:id|Update prduct|
-|DELETE|/admin/product/:id|Hapus product|
+## Role Admin
 
 Account Admin :
 ```json
@@ -47,6 +40,15 @@ Account Admin :
 ```json
 Authorization : Bearer < Token >
 ```
+
+## Product
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+|GET| /admin/products | List product |
+|GET|/admin/product/:id|Detail Product|
+|POST|/admin/product|Membuat product|
+|PATCH|/admin/product/:id|Update product|
+|DELETE|/admin/product/:id|Hapus product|
 
 **GET `/admin/products`**
 
@@ -82,3 +84,31 @@ Authorization : Bearer < Token >
 ```json
 key image | value < file image >
 ```
+## Category
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+|GET| /admin/categorys | List category |
+|GET|/admin/category/:id|Detail category|
+|POST|/admin/category|Membuat category|
+|PATCH|/admin/category/:id|Update category|
+|DELETE|/admin/category/:id|Hapus category|
+
+**GET `/admin/categorys`**
+
+**GET `/admin/category/:id`**
+
+**POST `/admin/category`**
+```json
+{
+  "name":
+}
+```
+
+**PATCH `/admin/category/:id`**
+```json
+{
+  "name":
+}
+```
+
+**DELETE `/admin/category/:id`**
