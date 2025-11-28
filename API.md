@@ -60,6 +60,7 @@ Authorization : Bearer < Token >
   "description": 
   "stock":
   "isFavorite":
+  "categoryId":
 }
 ```
 
@@ -71,7 +72,13 @@ Authorization : Bearer < Token >
   "description": 
   "stock":
   "isFavorite":
+  "categoryId":
 }
 ```
 
 **DELETE `/admin/product/:id`**
+
+**POST `/admin/product/upload/image/:id`**
+```json
+key image | value < file image >
+```

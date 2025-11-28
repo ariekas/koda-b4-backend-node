@@ -1,4 +1,4 @@
-import { create, deleted, detail, edit, list } from "../../repositorys/admin/product.js";
+import { create, deleted, detail, edit, list, uploadImage } from "../../repositorys/admin/product.js";
 
 export async function createProduct(req, res) {
   try {
@@ -113,4 +113,28 @@ export async function deleteProduct(req, res) {
             error: error.message,
           });
     }
+}
+
+export async function uploadImageProduct(req, res) {
+  try {
+    const productImaage = await uploadImage(req.params.id, req.file.path)
+
+    if (!productImaage) {
+      return res.status(404).json({
+        success: false,
+        message: "failed to upload image"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Upload image berhasil",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error Server",
+      error: error.message,
+    });
+  }
 }

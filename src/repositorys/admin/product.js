@@ -41,3 +41,23 @@ export async function deleted(id) {
     where : {id : Number(id)}
   })
 }
+
+export async function uploadImage(id, imagePath) {
+  const product = await detail(id);
+
+  if (!product) {
+    throw new Error("Product tidak ditemukan");
+  }
+
+  return await prisma.product.update({
+    where: {id : Number(id)},
+    data :{
+      images: {
+        create: {
+          image: imagePath
+        }
+      }
+    }
+  })
+
+}

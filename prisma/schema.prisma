@@ -49,8 +49,8 @@ model Profile {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id])
+  userId Int?  @unique
+  user   User? @relation(fields: [userId], references: [id])
 
   @@map("profiles")
 }
@@ -79,8 +79,8 @@ model Product {
   updated_at     DateTime   @updatedAt
   discount       Discount[]
 
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
 
   images   Product_image[]
   sizes    Size_product[]
@@ -88,8 +88,8 @@ model Product {
 
   tax Tax?
 
-  cartId Int
-  cart   Cart @relation(fields: [cartId], references: [id])
+  cartId Int?
+  cart   Cart? @relation(fields: [cartId], references: [id])
 
   rating Rating[]
 
@@ -103,8 +103,8 @@ model Discount {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("discounts")
 }
@@ -115,8 +115,8 @@ model Product_image {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("product_images")
 }
@@ -128,8 +128,8 @@ model Size_product {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("size_products")
 }
@@ -141,8 +141,8 @@ model Variant {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("variants")
 }
@@ -154,8 +154,8 @@ model Tax {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int     @unique
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?     @unique
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("taxs")
 }
@@ -166,8 +166,8 @@ model Cart {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   product    Product[]
-  userId     Int
-  user       User      @relation(fields: [userId], references: [id])
+  userId     Int?
+  user       User?      @relation(fields: [userId], references: [id])
 
   @@map("carts")
 }
@@ -179,8 +179,8 @@ model Delivery {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int          @unique
-  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId Int?          @unique
+  transaction   Transactions? @relation(fields: [transactionId], references: [id])
 
   @@map("deliverys")
 }
@@ -192,8 +192,8 @@ model Payment_method {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int          @unique
-  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId Int?          @unique
+  transaction   Transactions? @relation(fields: [transactionId], references: [id])
 
   @@map("payment_methods")
 }
@@ -204,8 +204,8 @@ model Status_transaction {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int          @unique
-  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId Int?          @unique
+  transaction   Transactions? @relation(fields: [transactionId], references: [id])
 
   @@map("status_transactions")
 }
@@ -237,8 +237,8 @@ model Transaction_item {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int
-  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId Int?
+  transaction   Transactions? @relation(fields: [transactionId], references: [id])
 
   @@map("transaction_items")
 }
@@ -250,8 +250,8 @@ model Rating {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("ratings")
 }
