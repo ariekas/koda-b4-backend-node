@@ -1,4 +1,4 @@
-import { findUser, create } from "../repositorys/auth.js";
+import { findUser, create } from "../repositorys/admin/users.js";
 import jwt from "jsonwebtoken"
 import "dotenv/config"
 import process from "process";
