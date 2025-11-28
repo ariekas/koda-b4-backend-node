@@ -11,7 +11,3 @@ app.get("/", (req, res) => {
         message : "Backend Running"
     })
 })
-
-app.listen(2020, () => {
-    console.log("Back end running on http:://localhost:2020")
-})
