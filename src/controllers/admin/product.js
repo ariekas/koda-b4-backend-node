@@ -1,9 +1,9 @@
-import { create, deleted, detail, edit, list, uploadImage } from "../../repositorys/admin/product.js";
+import { create, deleted, detailProduct, edit, list, uploadImage } from "../../repositorys/product.js";
 
 export async function createProduct(req, res) {
   try {
-    const product = await create(req.body);
-    if (product.stock < 0) {
+
+    if (req.body.stock < 0) {
       res.status(401).json({
         success: false,
         message: "Stock much be more 0",
@@ -11,13 +11,16 @@ export async function createProduct(req, res) {
       return;
     }
 
-    if (product.price < 0) {
+    if (req.body.price < 0) {
       res.status(401).json({
         success: false,
         message: "price much be more 0",
       });
       return;
     }
+
+     await create(req.body);
+    
     res.status(201).json({
       success: true,
       message: "success create product",
@@ -58,7 +61,7 @@ export async function getAll(req, res) {
 
 export async function getDetail(req, res) {
     try {
-        const product = await detail(req.params.id)
+        const product = await detailProduct(req.params.id)
         if (!product){
             res.status(404).json({
                 success : false,
