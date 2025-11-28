@@ -11,3 +11,6 @@ app.get("/", (req, res) => {
         message : "Backend Running"
     })
 })
+
+
+export default app;
