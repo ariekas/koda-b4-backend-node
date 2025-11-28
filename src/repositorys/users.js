@@ -1,4 +1,4 @@
-import prisma from "../../lib/config/connect.js";
+import prisma from "../lib/config/connect.js";
 import bcrypt from "bcrypt";
 
 export async function list() {

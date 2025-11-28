@@ -1,4 +1,4 @@
-import { list, updateRole, detail } from "../../repositorys/admin/users.js";
+import { list, updateRole, detail } from "../../repositorys/users.js";
 
 export async function updateRoleUser(req, res) {
     try {

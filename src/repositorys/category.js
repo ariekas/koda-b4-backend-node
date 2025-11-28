@@ -1,4 +1,4 @@
-import prisma from "../../lib/config/connect.js";
+import prisma from "../lib/config/connect.js";
 
 export async function create(data) {
   return await prisma.category.create({

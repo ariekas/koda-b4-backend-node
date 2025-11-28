@@ -1,4 +1,4 @@
-import { create, deleted, detail, edit, list } from "../../repositorys/admin/category.js";
+import { create, deleted, detail, edit, list } from "../../repositorys/category.js";
 
 export async function createCategory(req, res) {
   try {
