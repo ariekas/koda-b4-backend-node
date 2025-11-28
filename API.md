@@ -112,3 +112,21 @@ key image | value < file image >
 ```
 
 **DELETE `/admin/category/:id`**
+
+## user
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+|PATCH| /admin/user/role/:id | Upload role user |
+|GET| /admin/users | list users |
+|GET|/admin/user/:id|Detail user|
+
+**PATCH `/admin/user/role/:id`**
+```json
+{
+  "role":
+}
+```
+
+**GET `/admin/users`**
+
+**GET `/admin/user/:id`**

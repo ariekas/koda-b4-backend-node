@@ -1,9 +1,14 @@
 import { Router } from "express";
 import { createProduct, deleteProduct, editProduct, getAll, getDetail, uploadImageProduct } from "../controllers/admin/product.js";
 import { createCategory, deleteCategory, detailCategory, editCategory, listCategory } from "../controllers/admin/category.js";
+import { detailUser, listUser, updateRoleUser } from "../controllers/admin/users.js";
 import upload from "../lib/middelware/uploadimage.js";
 
 const router = Router()
+
+router.patch("/user/role/:id", updateRoleUser)
+router.get("/users", listUser)
+router.get("/user/:id", detailUser)
 
 router.post("/product", createProduct)
 router.get("/products", getAll)

@@ -8,6 +8,9 @@ export async function list() {
 export async function detail(id) {
   return await prisma.user.findUnique({
     where: { id: Number(id) },
+    include :{
+      profile:{}
+    }
   });
 }
 
