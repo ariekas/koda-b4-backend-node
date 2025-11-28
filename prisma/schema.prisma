@@ -93,7 +93,7 @@ model Product {
 model Discount {
   id         Int      @id @default(autoincrement())
   name       String
-  dicount    Float
+  discount    Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

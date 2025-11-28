@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createProduct, deleteProduct, editProduct, getAll, getDetail, uploadImageProduct } from "../controllers/admin/product.js";
 import { createCategory, deleteCategory, detailCategory, editCategory, listCategory } from "../controllers/admin/category.js";
+import { createDiscount, listDiscount, getDetailDiscount, editDiscount, deleteDiscount } from "../controllers/admin/discount.js";
 import { detailUser, listUser, updateRoleUser } from "../controllers/admin/users.js";
 import upload from "../lib/middelware/uploadimage.js";
 
@@ -22,5 +23,11 @@ router.get("/categorys", listCategory)
 router.get("/category/:id", detailCategory)
 router.patch("/category/:id", editCategory)
 router.delete("/category/:id", deleteCategory)
+
+router.post("/discount", createDiscount)
+router.get("/discounts", listDiscount)
+router.get("/discount/:id", getDetailDiscount)
+router.patch("/discount/:id", editDiscount)
+router.delete("/discount/:id", deleteDiscount)
 
 export default router

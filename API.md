@@ -130,3 +130,21 @@ key image | value < file image >
 **GET `/admin/users`**
 
 **GET `/admin/user/:id`**
+
+## discount
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+|GET| /admin/discounts | List discount |
+|GET|/admin/discount/:id|Detail discount|
+|POST|/admin/discount|Membuat discount|
+|PATCH|/admin/discount/:id|Update discount|
+|DELETE|/admin/discount/:id|Hapus discount|
+
+**POST `/admin/discount`**
+```json
+{
+  "name": 
+  "discount": 
+  "productId": 
+}
+```
