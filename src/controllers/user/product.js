@@ -50,11 +50,10 @@ export async function filterProducts(req, res) {
     });
 
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
-      message: "Filter product failed",
-      error: error.message
+      message: "Error Server",
+      error: error.message,
     });
   }
 }

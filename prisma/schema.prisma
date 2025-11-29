@@ -161,7 +161,6 @@ model Tax {
 
 model Cart {
   id         Int       @id @default(autoincrement())
-  quantity   Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   items      CartItem[]
