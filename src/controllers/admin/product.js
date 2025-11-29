@@ -120,14 +120,23 @@ export async function deleteProduct(req, res) {
 
 export async function uploadImageProduct(req, res) {
   try {
-    const productImaage = await uploadImage(req.params.id, req.file.path)
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "error upload image"
+        });
+      }
 
-    if (!productImaage) {
-      return res.status(404).json({
-        success: false,
-        message: "failed to upload image"
-      });
-    }
+      if (req.files.length > 3) {
+        return res.status(400).json({
+          success: false,
+          message: "Upload a maximum of 3 images"
+        });
+      }
+  
+       await Promise.all(
+        req.files.map(file => uploadImage(req.params.id, file.path))
+      );
 
     return res.status(200).json({
       success: true,
