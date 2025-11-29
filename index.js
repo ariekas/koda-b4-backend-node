@@ -3,7 +3,8 @@ import mainRouter from "./src/routes/index.js"
 
 const app = express()
 app.use(express.json());
-app.use("/", mainRouter)
+app.use("/image", express.static("uploads"));
+
 app.get("/", (req, res) => {
     res.status(201).json({
         success : true,
@@ -11,6 +12,7 @@ app.get("/", (req, res) => {
     })
 })
 
+app.use("/", mainRouter)
 
 app.listen(2020, () => {
     console.log("Back end running on http:://localhost:2020")

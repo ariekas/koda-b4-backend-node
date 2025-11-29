@@ -8,9 +8,9 @@ export async function list() {
 export async function detail(id) {
   return await prisma.user.findUnique({
     where: { id: Number(id) },
-    include :{
-      profile:{}
-    }
+    include: {
+      profile: {},
+    },
   });
 }
 
@@ -25,7 +25,6 @@ export async function updateRole(data, id) {
   });
 }
 
-
 export async function findUser(email) {
   return await prisma.user.findUnique({
     where: { email },
@@ -33,16 +32,36 @@ export async function findUser(email) {
 }
 
 export async function create(data) {
-    const hash = await bcrypt.hash(data.password, 10);
-  
-    return await prisma.user.create({
-      data: {
-        fullname: data.fullname,
-        email: data.email,
-        password: hash,
-        profile: {
-          create : {}
-        }
+  const hash = await bcrypt.hash(data.password, 10);
+
+  return await prisma.user.create({
+    data: {
+      fullname: data.fullname,
+      email: data.email,
+      password: hash,
+      profile: {
+        create: {},
       },
-    });
-  }
+    },
+  });
+}
+
+export async function updateProfile(data, id, imagePath) {
+  return await prisma.user.update({
+    where: { id: Number(id) },
+    data: {
+      ...(data.user || {}), 
+
+      ...(data.profile || imagePath
+        ? {
+            profile: {
+              update: {
+                ...(data.profile || {}),
+                ...(imagePath && { pic: imagePath }), 
+              },
+            },
+          }
+        : {}),
+    },
+  });
+}
