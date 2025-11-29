@@ -1,4 +1,4 @@
-import { createCart, addCartItems } from "../../repositorys/cart.js";
+import { addCartItems } from "../../repositorys/cart.js";
 
 export async function createCart(req, res) {
   try {
