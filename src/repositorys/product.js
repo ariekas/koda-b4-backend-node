@@ -20,6 +20,11 @@ export async function list() {
 export async function detailProduct(id) {
   return await prisma.product.findUnique({
     where: { id: Number(id) },
+    include: {
+      images : {},
+      sizes: {},
+      variants: {}
+    }
   });
 }
 
@@ -132,3 +137,4 @@ export async function filter(params) {
     }
   })
 }
+
