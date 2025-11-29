@@ -68,3 +68,14 @@ export async function uploadImage(id, imagePath) {
   })
 
 }
+
+export async function productFavourite(){
+  return await prisma.product.findMany({
+    where:{ isFavorite : true},
+    include: {
+      images: {
+       take: 1
+      }
+    }
+  })
+}
