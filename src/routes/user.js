@@ -5,7 +5,7 @@ import { getProfile, updateUser } from "../controllers/user/user.js";
 import { getDetail } from "../controllers/admin/product.js";
 import { createCart } from "../controllers/user/cart.js";
 import { addTransaction } from "../controllers/user/transaction.js";
-import { getListHistory } from "../controllers/user/history.js";
+import { getDetailHistory, getListHistory } from "../controllers/user/history.js";
 
 const router = Router()
 
@@ -16,6 +16,7 @@ router.get("/product/filter", filterProducts)
 router.get("/product/:id", getDetail)
 router.post("/cart", createCart)
 router.post("/transaction", addTransaction)
-router.get("/history", getListHistory)
+router.get("/historys", getListHistory)
+router.get("/history/:id", getDetailHistory)
 
 export default router
