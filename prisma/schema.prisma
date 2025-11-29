@@ -28,8 +28,9 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  cart    Cart[]
-  profile Profile?
+  transaction Transactions[]
+  cart        Cart[]
+  profile     Profile?
 
   @@map("users")
 }
@@ -75,12 +76,11 @@ model Product {
   categoryId Int?
   category   Category? @relation(fields: [categoryId], references: [id])
 
-  images   Product_image[]
-  sizes    Size_product[]
-  variants Variant[]
-  cartItems CartItem[]
+  images           Product_image[]
+  sizes            Size_product[]
+  variants         Variant[]
+  cartItems        CartItem[]
   transactionItems Transaction_item[]
-
 
   tax Tax?
 
@@ -92,7 +92,7 @@ model Product {
 model Discount {
   id         Int      @id @default(autoincrement())
   name       String
-  discount    Float
+  discount   Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -124,7 +124,7 @@ model Size_product {
   productId Int?
   product   Product? @relation(fields: [productId], references: [id])
 
-  cartItems CartItem[]
+  cartItems        CartItem[]
   transactionItems Transaction_item[]
 
   @@map("size_products")
@@ -140,7 +140,7 @@ model Variant {
   productId Int?
   product   Product? @relation(fields: [productId], references: [id])
 
-  cartItems CartItem[]
+  cartItems        CartItem[]
   transactionItems Transaction_item[]
 
   @@map("variants")
@@ -160,9 +160,9 @@ model Tax {
 }
 
 model Cart {
-  id         Int       @id @default(autoincrement())
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id         Int        @id @default(autoincrement())
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   items      CartItem[]
   userId     Int?
   user       User?      @relation(fields: [userId], references: [id])
@@ -171,27 +171,26 @@ model Cart {
 }
 
 model CartItem {
-  id         Int      @id @default(autoincrement())
-  quantity   Int
+  id       Int @id @default(autoincrement())
+  quantity Int
 
-  productId  Int?
-  product    Product?  @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
-  sizeId     Int?
-  size       Size_product? @relation(fields: [sizeId], references: [id])
+  sizeId Int?
+  size   Size_product? @relation(fields: [sizeId], references: [id])
 
-  variantId  Int?
-  variant    Variant?      @relation(fields: [variantId], references: [id])
+  variantId Int?
+  variant   Variant? @relation(fields: [variantId], references: [id])
 
-  cartId     Int?
-  cart       Cart?     @relation(fields: [cartId], references: [id])
+  cartId Int?
+  cart   Cart? @relation(fields: [cartId], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   @@map("cart_items")
 }
-
 
 model Delivery {
   id         Int      @id @default(autoincrement())
@@ -200,8 +199,7 @@ model Delivery {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int?          @unique
-  transaction   Transactions? @relation(fields: [transactionId], references: [id])
+  transaction Transactions[]
 
   @@map("deliverys")
 }
@@ -213,8 +211,7 @@ model Payment_method {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int?          @unique
-  transaction   Transactions? @relation(fields: [transactionId], references: [id])
+  transaction Transactions[]
 
   @@map("payment_methods")
 }
@@ -225,8 +222,7 @@ model Status_transaction {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  transactionId Int?          @unique
-  transaction   Transactions? @relation(fields: [transactionId], references: [id])
+  transaction Transactions[]
 
   @@map("status_transactions")
 }
@@ -242,9 +238,16 @@ model Transactions {
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 
-  statusTransaction Status_transaction?
-  paymentMethod     Payment_method?
-  delivery          Delivery?
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  statusTransactionId Int @default(1)
+  paymentMethodId     Int?
+  deliveryId          Int?
+
+  statusTransaction Status_transaction? @relation(fields: [statusTransactionId], references: [id])
+  paymentMethod     Payment_method?     @relation(fields: [paymentMethodId], references: [id])
+  delivery          Delivery?           @relation(fields: [deliveryId], references: [id])
 
   transactionItem Transaction_item[]
 
@@ -261,14 +264,14 @@ model Transaction_item {
   transactionId Int?
   transaction   Transactions? @relation(fields: [transactionId], references: [id])
 
- productId     Int?
-  product       Product? @relation(fields: [productId], references: [id])
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
 
-  sizeId        Int?
-  size          Size_product? @relation(fields: [sizeId], references: [id])
+  sizeId Int?
+  size   Size_product? @relation(fields: [sizeId], references: [id])
 
-  variantId     Int?
-  variant       Variant? @relation(fields: [variantId], references: [id])
+  variantId Int?
+  variant   Variant? @relation(fields: [variantId], references: [id])
 
   @@map("transaction_items")
 }
