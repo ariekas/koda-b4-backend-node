@@ -1,5 +1,7 @@
 import { create, deleted, detailProduct, edit, list, uploadImage } from "../../repositorys/product.js";
+import { invalidateCache } from "../../lib/middelware/invalidatecache.js";
 
+const pathRedis = "cache:/admin/product*" 
 export async function createProduct(req, res) {
   try {
 
@@ -20,6 +22,8 @@ export async function createProduct(req, res) {
     }
 
      await create(req.body);
+
+     await invalidateCache(pathRedis)
     
     res.status(201).json({
       success: true,
@@ -87,6 +91,8 @@ export async function getDetail(req, res) {
 export async function editProduct(req, res) {
     try {
         const product = await edit(req.params.id, req.body)
+
+        await invalidateCache(pathRedis)
         return res.status(200).json({
             success: true,
             message: "success update product",
@@ -105,6 +111,7 @@ export async function deleteProduct(req, res) {
     try {
         const product = await deleted(req.params.id)
 
+        await invalidateCache(pathRedis)
         return res.status(200).json({
             success: true,
             message: "success deleted product",
