@@ -10,6 +10,13 @@ export async function listHistory(userId) {
 }
 
 export async function detailHistory(id) {
+    const transaction = await prisma.transactions.findUnique({
+        where: {id: Number(id)}
+    })
+
+    if (!transaction){
+        throw new Error("History not found");
+    }
     return await prisma.transactions.findUnique({
         where: {id : Number(id)},
         include: {
