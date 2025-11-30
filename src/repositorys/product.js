@@ -13,8 +13,18 @@ export async function create(data) {
   });
 }
 
-export async function list() {
-  return await prisma.product.findMany();
+export async function list(page, limit) {
+  const skip = (page -1 ) * limit
+
+  const [data, totalItems] = await Promise.all([
+    prisma.product.findMany({
+      skip,
+      take: limit,
+    }),
+    prisma.product.count()
+  ])
+
+  return {data, totalItems}
 }
 
 export async function detailProduct(id) {

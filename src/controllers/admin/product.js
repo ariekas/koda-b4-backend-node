@@ -1,5 +1,6 @@
 import { create, deleted, detailProduct, edit, list, uploadImage } from "../../repositorys/product.js";
 import { invalidateCache } from "../../lib/middelware/invalidatecache.js";
+import  pagination  from "../../lib/config/pagination.js";
 
 const pathRedis = "cache:/admin/product*" 
 export async function createProduct(req, res) {
@@ -39,28 +40,36 @@ export async function createProduct(req, res) {
 }
 
 export async function getAll(req, res) {
-    try {
-        const product = await list(req.body)
-        if(!product) {
-            res.status(404).json({
-                success : false,
-                message: "product not found"
-            })
-            return
-        }
+  try {
+    let { page = 1, limit = 10 } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+    
+    const { data, totalItems } = await list(page, limit);
 
-        res.status(201).json({
-            success: true,
-            message: "success getting list product",
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Error Server",
-            error: error.message,
-          });
+    if (!data || data.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found"
+      });
     }
+
+    const hateoas = pagination("/admin/product", page, limit, totalItems);
+
+    res.status(200).json({
+      success: true,
+      message: "Success getting list product",
+      ...hateoas,
+      data
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error Server",
+      error: error.message,
+    });
+  }
 }
 
 export async function getDetail(req, res) {
