@@ -39,4 +39,9 @@ export async function addCartItems(userId, data, quantity) {
       },
     });
   }
-  
+
+export async function  deleteCartItem(id) {
+  return await prisma.cartItem.delete({
+    where: {id : Number(id)}
+  })
+}
