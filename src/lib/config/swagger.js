@@ -1,19 +1,29 @@
 import expressJSDocSwagger from "express-jsdoc-swagger";
 
 export function swaggerDocs(app) {
-    const options = {
-      info: {
-        version: "1.0.0",
-        title: "API Documentation",
-        description: "Documentation for your Express API",
+  const options = {
+    info: {
+      version: "1.0.0",
+      title: "API Documentation",
+      description: "Documentation for your Express API",
+    },
+    security: {
+      BearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
       },
-      baseDir: "./",
-      filesPattern: ["./src/controllers/**/*.js"],
-      swaggerUIPath: "/api-docs",
-      exposeSwaggerUI: true,
-      exposeApiDocs: false,
-      apiDocsPath: "/api-docs-json",
-    };
-  
-    expressJSDocSwagger(app)(options);
-  }
+    },
+    baseDir: process.cwd(),
+    filesPattern: ["./src/controllers/**/*.js"],
+    swaggerUIPath: "/api-docs",
+    exposeSwaggerUI: true,
+    exposeApiDocs: true,
+    apiDocsPath: "/api-docs-json",
+    swaggerUiOptions: {
+      persistAuthorization: true,
+    },
+  };
+
+  expressJSDocSwagger(app)(options);
+}
