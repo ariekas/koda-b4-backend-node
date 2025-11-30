@@ -8,7 +8,17 @@ export async function createTransaction(userId, data) {
     });
   
     if (!user) throw new Error("User not found");
-  
+
+    const payment = await prisma.payment_method.findUnique({
+      where: { id: Number(data.paymentMethodId) }
+    });
+    if (!payment) throw new Error("Payment method not found");
+    
+    const delivery = await prisma.delivery.findUnique({
+      where: { id: Number(data.deliveryId) }
+    });
+    if (!delivery) throw new Error("Delivery not found");
+    
     // get all cart include product, size, variant
     const cart = await prisma.cart.findFirst({
       where: { userId },
@@ -45,7 +55,7 @@ export async function createTransaction(userId, data) {
         total,
         invoice_num: invoiceNum,
         userId: userId,
-        paymentMethodId: data.payment_methods || null,
+        paymentMethodId: data.paymentMethodId || null,
         deliveryId: data.deliveryId || null,
         transactionItem: { create: transactionItems },
       },
