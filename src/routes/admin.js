@@ -11,12 +11,12 @@ import { getDetailHistory } from "../controllers/user/history.js";
 const router = Router()
 
 router.patch("/user/role/:id", updateRoleUser)
-router.get("/users", listUser)
+router.get("/users",caching(15), listUser)
 router.get("/user/:id", detailUser)
 
 router.post("/product", createProduct)
 router.get("/products",caching(15), getAll)
-router.get("/product/:id",caching(15), getDetail)
+router.get("/product/:id", getDetail)
 router.patch("/product/:id", editProduct)
 router.delete("/product/:id", deleteProduct)
 router.post("/product/upload/image/:id", upload.array("image"), uploadImageProduct)
@@ -35,7 +35,6 @@ router.delete("/discount/:id", deleteDiscount)
 
 router.get("/transactions",caching(15), getListTransactions)
 router.get("/transaction/:id", getDetailHistory)
-
 router.patch("/transaction/status/:id", updateStatusTransaction)
 
 export default router

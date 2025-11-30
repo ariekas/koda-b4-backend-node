@@ -1,9 +1,13 @@
+import { invalidateCache } from "../../lib/middelware/invalidatecache.js";
 import { list, updateRole, detail } from "../../repositorys/users.js";
 
+const pathRedis = "cache:/admin/user*"
 export async function updateRoleUser(req, res) {
     try {
          await updateRole(req.body, req.params.id)
         
+        await invalidateCache(pathRedis)
+
         res.status(201).json({
             success: true,
             message: "success update role",
