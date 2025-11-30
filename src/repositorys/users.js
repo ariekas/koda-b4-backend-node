@@ -1,8 +1,17 @@
 import prisma from "../lib/config/connect.js";
 import bcrypt from "bcrypt";
 
-export async function list() {
-  return await prisma.user.findMany();
+export async function list(page, limit) {
+  const skip = (page -1) * limit
+
+  const [data, totalItems] = await Promise.all([
+    prisma.user.findMany({
+      skip,
+      take: limit
+    }),
+    prisma.user.count()
+  ])
+  return {data, totalItems};
 }
 
 export async function detail(id) {

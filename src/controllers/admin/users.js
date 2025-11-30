@@ -1,3 +1,4 @@
+import pagination from "../../lib/config/pagination.js";
 import { invalidateCache } from "../../lib/middelware/invalidatecache.js";
 import { list, updateRole, detail } from "../../repositorys/users.js";
 
@@ -41,12 +42,19 @@ export async function detailUser(req, res) {
 
 export async function listUser(req, res) {
     try {
+        let {page =1, limit = 10} = req.query
+        page = parseInt(page)
+        limit = parseInt(limit)
+
+        const {data, totalItems}= await list(page, limit)
         
-        const user = await list()
+        const hateoas = pagination("/admin/users", page, limit, totalItems)
+
         res.status(201).json({
             success: true,
             message: "success getting detail user",
-            data : user
+            ...hateoas,
+            data 
           });
     } catch (error) {
         res.status(500).json({
