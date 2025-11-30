@@ -8,7 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -31,5 +32,3 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
