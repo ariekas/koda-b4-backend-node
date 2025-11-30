@@ -81,8 +81,8 @@ export async function saveOtp(email, otp) {
   return await prisma.user.update({
     where: {email},
     data: {
-      opt: otp,
-      OtpExpires:exprt
+      codeOtp: otp,
+      otpExpires:exprt
     }
   })
 }
@@ -93,8 +93,8 @@ export async function resetPassword(email, newPassword) {
     where: {email},
     data: {
       password: hash,
-      otp: null,
-      OtpExpires: null
+      codeOtp: null,
+      otpExpires: null
     }
   })
 }

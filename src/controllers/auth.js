@@ -1,9 +1,28 @@
-import { findUser, create, saveOtp, resetPassword } from "../repositorys/users.js";
-import jwt from "jsonwebtoken"
-import "dotenv/config"
+import {
+  findUser,
+  create,
+  saveOtp,
+  resetPassword,
+} from "../repositorys/users.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 import bcrypt from "bcrypt";
 import { sendToEmail } from "../lib/config/sendopt.js";
 
+/**
+ * @typedef {object} RegisterRequest
+ * @property {string} fullname.required - Fullname
+ * @property {string} email.required - Email user
+ * @property {string} password.required - Password minimal 6 karakter
+ */
+
+/**
+ * POST /auth/register
+ * @summary Register user
+ * @tags Auth
+ * @param {RegisterRequest} request.body.required - Register payload
+ * @return {object} 201 - success response
+ */
 export async function register(req, res) {
   try {
     if (req.body.password.length < 6) {
@@ -39,6 +58,18 @@ export async function register(req, res) {
   }
 }
 
+/**
+ * @typedef {object} LoginRequest
+ * @property {string} email.required - Email user
+ * @property {string} password.required - Password user
+ */
+/**
+ * POST /auth/login
+ * @summary Login user
+ * @tags Auth
+ * @param {LoginRequest} request.body.required - Login payload
+ * @return {object} 200 - success login with token
+ */
 export async function login(req, res) {
   try {
     const user = await findUser(req.body.email);
@@ -50,39 +81,53 @@ export async function login(req, res) {
       return;
     }
 
-    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    const isValidPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
     if (!isValidPassword) {
-    res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "Wrong password",
       });
-      return
-    }    
+      return;
+    }
 
-    const token = jwt.sign({id: user.id}, process.env.APP_SECRET, {
-        expiresIn: "1d"
-    })
+    const token = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
+      expiresIn: "1d",
+    });
 
     res.status(200).json({
-        success: true,
-        message: "Login berhasil",
-        data: {
-          token
-        }
-      });
+      success: true,
+      message: "Login berhasil",
+      data: {
+        token,
+      },
+    });
   } catch (error) {
     res.status(500).json({
-        success: false,
-        message: "Error Server",
-        error: error.message,
-      });
+      success: false,
+      message: "Error Server",
+      error: error.message,
+    });
   }
 }
 
+/**
+ * @typedef {object} ForgotPasswordRequest
+ * @property {string} email.required - Email yang akan dikirim OTP
+ */
+/**
+ * POST /auth/forget-password
+ * @summary Kirim OTP ke email untuk reset password
+ * @tags Auth
+ * @param {ForgotPasswordRequest} request.body.required - Email user
+ * @return {object} 200 - OTP dikirim ke email
+ */
 
 export async function forgetPassword(req, res) {
   try {
-    const user = await findUser(req.body.email)
+    const user = await findUser(req.body.email);
 
     if (!user) {
       return res.status(404).json({
@@ -91,9 +136,9 @@ export async function forgetPassword(req, res) {
       });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    await saveOtp(req.body.email, otp)
+    await saveOtp(req.body.email, otp);
 
     await sendToEmail.sendMail({
       from: process.env.EMAIL_USER,
@@ -105,7 +150,7 @@ export async function forgetPassword(req, res) {
       <h2>${otp}</h2>
       <p>Kode ini berlaku selama <b>10 menit</b>.</p>
     `,
-    })
+    });
 
     return res.json({
       success: true,
@@ -120,25 +165,38 @@ export async function forgetPassword(req, res) {
   }
 }
 
+/**
+ * @typedef {object} ResetPasswordRequest
+ * @property {string} email.required - Email user
+ * @property {string} otp.required - Kode OTP
+ * @property {string} newPassword.required - Password baru (min 6 karakter)
+ */
+/**
+ * POST /auth/reset-password
+ * @summary Reset password dengan OTP
+ * @tags Auth
+ * @param {ResetPasswordRequest} request.body.required - Reset password payload
+ * @return {object} 201 - Password berhasil direset
+ */
 export async function resetPasswordUser(req, res) {
   try {
-    const user = await findUser(req.body.email)
+    const user = await findUser(req.body.email);
 
-    if (!user || !user.resetOtp) {
+    if (!user || req.body.codeOtp) {
       return res.status(400).json({
         success: false,
         message: "Invalid OTP",
       });
     }
 
-    if (user.resetOtp !== otp) {
+    if (user.resetOtp !== req.body.codeOtp) {
       return res.status(400).json({
         success: false,
         message: "Incorrect OTP",
       });
     }
 
-    if (new Date() > new Date(user.resetOtpExpires)) {
+    if (new Date() > new Date(user.otpExpires)) {
       return res.status(400).json({
         success: false,
         message: "OTP expired",
@@ -146,12 +204,17 @@ export async function resetPasswordUser(req, res) {
     }
 
     if (req.body.newPassword.length < 6) {
-      return res.status(400).json({ success: false, message: "Password must be at least 6 characters long" });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Password must be at least 6 characters long",
+        });
     }
 
-    await resetPassword(req.body.emai, req.body.newPassword)
+    await resetPassword(req.body.email, req.body.newPassword);
 
-    res.json({
+    res.status(201).json({
       success: true,
       message: "Password successfully reset",
     });
