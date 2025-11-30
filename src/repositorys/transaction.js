@@ -84,3 +84,12 @@ export async function createTransaction(userId, data) {
 
     return( data, totalItems)
   }
+
+  export async function updateStatus(id, statusTransactionId) {
+    return await prisma.transactions.update({
+      where: {id : Number(id)},
+      data: {
+        statusTransactionId: Number(statusTransactionId)
+      }
+    })
+  }
