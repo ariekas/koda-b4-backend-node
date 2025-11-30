@@ -25,7 +25,7 @@ export async function addCartItems(userId, data, quantity) {
       throw new Error("Product not found");
     }
   
-    const size = await prisma.size.findUnique({ where: { id: sizeId } });
+    const size = await prisma.size_product.findUnique({ where: { id: sizeId } });
     if (!size) {
       throw new Error("Size not found");
     }
