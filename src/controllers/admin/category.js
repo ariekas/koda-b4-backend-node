@@ -10,6 +10,7 @@ import { create, deleted, detail, edit, list } from "../../repositorys/category.
  * @tags Admin Category
  * @param {CreateCategory} request.body.required - category payload
  * @return {object} 201 - success response
+ * @security BearerAuth
  */
 export async function createCategory(req, res) {
   try {
@@ -34,6 +35,7 @@ export async function createCategory(req, res) {
  * @summary List category
  * @tags Admin Category
  * @return {object} 201 - success response
+ * @security BearerAuth
  */
 export async function listCategory(req, res) {
     try {
@@ -67,6 +69,7 @@ export async function listCategory(req, res) {
  * @param {number} id.path.required - Category ID
  * @return {object} 201 - success response
  * @return {object} 404 - category not found
+ * @security BearerAuth
  */
 export async function detailCategory(req, res) {
     try {
@@ -105,6 +108,7 @@ export async function detailCategory(req, res) {
  * @param {UpdateCategory} request.body.required - Category update payload
  * @return {object} 201 - success response
  * @return {object} 201.data - Updated category data
+ * @security BearerAuth
  */
 export async function editCategory(req, res) {
     try {
@@ -129,6 +133,7 @@ export async function editCategory(req, res) {
  * @tags Admin Category
  * @param {number} id.path.required - Category ID
  * @return {object} 201 - success response
+ * @security BearerAuth
  */
 export async function deleteCategory(req, res) {
     try {

@@ -14,6 +14,7 @@ import { create, list, detailDiscount, deleted, edit } from "../../repositorys/d
  * @param {CreateDiscount} request.body.required - Discount payload
  * @return {object} 201 - success response
  * @return {object} 500 - Error Server
+ * @security BearerAuth
  */
 export async function createDiscount(req, res) {
   try {
@@ -50,6 +51,7 @@ export async function createDiscount(req, res) {
  * @return {object} 201 - success response
  * @return {array<DiscountResponse>} 200.data - List of discounts
  * @return {object} 500 - Error Server
+ * @security BearerAuth
  */
 export async function listDiscount(req, res) {
     try {
@@ -78,6 +80,7 @@ export async function listDiscount(req, res) {
  * @return {DiscountResponse} 200.data - Discount detail
  * @return {object} 404 - discount not found
  * @return {object} 500 - Error Server
+ * @security BearerAuth
  */
 export async function getDetailDiscount(req, res) {
     try {
@@ -112,6 +115,7 @@ export async function getDetailDiscount(req, res) {
  * @param {CreateDiscount} request.body.required - Discount payload
  * @return {object} 201 - success update
  * @return {object} 500 - Error Server
+ * @security BearerAuth
  */
 export async function editDiscount(req, res) {
     try {
@@ -136,6 +140,7 @@ export async function editDiscount(req, res) {
  * @param {number} id.path.required - Discount ID
  * @return {object} 201 - success delete
  * @return {object} 500 - Error Server
+ * @security BearerAuth
  */
 export async function deleteDiscount(req, res) {
     try {
