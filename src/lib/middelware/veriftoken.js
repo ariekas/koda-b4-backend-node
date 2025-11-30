@@ -21,7 +21,6 @@ export function verifToken(req, res, next) {
   
   try {
     const payload = jwt.verify(token, process.env.APP_SECRET);
-    console.log(payload)
     req.jwtPayload = payload; 
     next();
   } catch (error) {

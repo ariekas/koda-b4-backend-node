@@ -82,7 +82,7 @@ export async function createTransaction(userId, data) {
     prisma.transactions.count()
     ])
 
-    return( data, totalItems)
+    return { data, totalItems}
   }
 
   export async function updateStatus(id, statusTransactionId) {
