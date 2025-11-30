@@ -1,0 +1,10 @@
+import nodemailer from "nodemailer"
+import "dotenv/config"
+
+export const sendToEmail = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user : process.env.EMAIL_USER,
+        pass : process.envEMAIL_PASS,
+    }
+})

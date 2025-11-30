@@ -74,3 +74,27 @@ export async function updateProfile(data, id, imagePath) {
     },
   });
 }
+
+export async function saveOtp(email, otp) {
+  const exprt = new Date(Date.now() + 10 * 60 * 1000)
+
+  return await prisma.user.update({
+    where: {email},
+    data: {
+      opt: otp,
+      OtpExpires:exprt
+    }
+  })
+}
+
+export async function resetPassword(email, newPassword) {
+  const hash = await bcrypt.hash(newPassword, 10)
+  return await prisma.user.update({
+    where: {email},
+    data: {
+      password: hash,
+      otp: null,
+      OtpExpires: null
+    }
+  })
+}
