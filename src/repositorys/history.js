@@ -18,7 +18,13 @@ export async function detailHistory(id) {
             statusTransaction: {},
             transactionItem: {
                 include: {
-                    product: {}
+                    product: {
+                        include: {
+                            images: {
+                                take: 1
+                            }
+                        }
+                    }
                 }
             },
             user: {}
