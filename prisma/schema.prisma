@@ -27,8 +27,8 @@ model User {
   isActive   Boolean  @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  opt String?
-  OtpExpires DateTime?
+  codeOtp String?
+  otpExpires DateTime?
 
   transaction Transactions[]
   cart        Cart[]
