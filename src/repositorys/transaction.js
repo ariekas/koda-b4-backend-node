@@ -62,3 +62,25 @@ export async function createTransaction(userId, data) {
   
     return transaction;
   }
+
+  export async function listTransaction(page, limit) {
+    const skip = (page - 1) * limit
+
+    const [data, totalItems] = await Promise.all([
+    prisma.transactions.findMany({
+      skip,
+      take: limit,
+      include: {
+        statusTransaction: {},
+        transactionItem: {
+          include: {
+            product: {}
+          }
+        }
+      }
+    }),
+    prisma.transactions.count()
+    ])
+
+    return( data, totalItems)
+  }

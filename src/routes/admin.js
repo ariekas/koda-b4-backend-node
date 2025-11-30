@@ -5,6 +5,7 @@ import { createDiscount, listDiscount, getDetailDiscount, editDiscount, deleteDi
 import { detailUser, listUser, updateRoleUser } from "../controllers/admin/users.js";
 import upload from "../lib/middelware/uploadimage.js";
 import { caching } from "../lib/middelware/caching.js"
+import { getListTransactions } from "../controllers/admin/transaction.js";
 
 const router = Router()
 
@@ -30,5 +31,7 @@ router.get("/discounts", listDiscount)
 router.get("/discount/:id", getDetailDiscount)
 router.patch("/discount/:id", editDiscount)
 router.delete("/discount/:id", deleteDiscount)
+
+router.get("/transactions",caching(15), getListTransactions)
 
 export default router
