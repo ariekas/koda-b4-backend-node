@@ -36,7 +36,9 @@
     "pg": "^8.16.3",
     "prisma": "^7.0.1",
     "redis": "^5.10.0",
-    "serverless-http": "^4.0.0"
+    "serverless-http": "^4.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",

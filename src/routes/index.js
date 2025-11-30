@@ -7,8 +7,7 @@ import { checkRole } from "../lib/middelware/verifrole.js";
 let router = Router()
 
 router.use("/auth", authRouter)
-// router.use("/admin", verifToken, checkRole("admin"), adminRouter)
-router.use("/admin", adminRouter)
-router.use("/",verifToken, userRouter)
+router.use("/admin", verifToken, checkRole("admin"), adminRouter)
+router.use("/user",verifToken, userRouter)
 
 export default router
