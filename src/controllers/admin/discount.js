@@ -1,6 +1,20 @@
 import { create, list, detailDiscount, deleted, edit } from "../../repositorys/discount.js";
 
-
+/**
+ * @typedef {object} CreateDiscount
+ * @property {string} name.required - Discount name
+ * @property {number} discount.required - Discount percentage
+ * @property {number} productId.required - ProductId percentage
+ * 
+ */
+/**
+ * POST /admin/discount
+ * @summary Create discount
+ * @tags Admin Discount
+ * @param {CreateDiscount} request.body.required - Discount payload
+ * @return {object} 201 - success response
+ * @return {object} 500 - Error Server
+ */
 export async function createDiscount(req, res) {
   try {
     await create(req.body);
@@ -18,6 +32,25 @@ export async function createDiscount(req, res) {
   }
 }
 
+
+/**
+ * @typedef {object} DiscountResponse
+ * @property {number} id - Discount ID
+ * @property {string} name - Discount name
+ * @property {number} discount - Discount percentage
+ * @property {string} [description] - Description
+ * @property {number} [productId] - Related product ID
+ * @property {string} created_at - Creation datetime
+ * @property {string} updated_at - Last update datetime
+ */
+/**
+ * GET /admin/discounts
+ * @summary Get list of all discounts
+ * @tags Admin Discount
+ * @return {object} 201 - success response
+ * @return {array<DiscountResponse>} 200.data - List of discounts
+ * @return {object} 500 - Error Server
+ */
 export async function listDiscount(req, res) {
     try {
         const discount = await list(req.body)
@@ -36,6 +69,16 @@ export async function listDiscount(req, res) {
     }
 }
 
+/**
+ * GET /admin/discount/{id}
+ * @summary Get discount detail
+ * @tags Admin Discount
+ * @param {number} id.path.required - Discount ID
+ * @return {object} 201 - success response
+ * @return {DiscountResponse} 200.data - Discount detail
+ * @return {object} 404 - discount not found
+ * @return {object} 500 - Error Server
+ */
 export async function getDetailDiscount(req, res) {
     try {
         const discount = await detailDiscount(req.params.id)
@@ -61,6 +104,15 @@ export async function getDetailDiscount(req, res) {
     }
 }
 
+/**
+ * PATCH /admin/discount/{id}
+ * @summary Update discount
+ * @tags Admin Discount
+ * @param {number} id.path.required - Product ID
+ * @param {CreateDiscount} request.body.required - Discount payload
+ * @return {object} 201 - success update
+ * @return {object} 500 - Error Server
+ */
 export async function editDiscount(req, res) {
     try {
          await edit(req.params.id, req.body)
@@ -77,6 +129,14 @@ export async function editDiscount(req, res) {
     }
 }
 
+/**
+ * DELETE /admin/discount/{id}
+ * @summary Delete discount
+ * @tags Admin Discount
+ * @param {number} id.path.required - Discount ID
+ * @return {object} 201 - success delete
+ * @return {object} 500 - Error Server
+ */
 export async function deleteDiscount(req, res) {
     try {
          await deleted(req.params.id)
