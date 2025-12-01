@@ -10,8 +10,8 @@ import { getDetailHistory, getListHistory } from "../controllers/user/history.js
 const router = Router()
 
 router.get("/product/favorite", getFavourite)
-router.get("/user/profile", getProfile)
-router.patch("/user/profile", upload.single("pic"), updateUser)
+router.get("/profile", getProfile)
+router.patch("/profile", upload.single("pic"), updateUser)
 router.get("/product/filter", filterProducts)
 router.get("/product/:id", getDetail)
 router.get("/carts", getListCart)

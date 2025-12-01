@@ -5,7 +5,7 @@ export function swaggerDocs(app) {
     info: {
       version: "1.0.0",
       title: "API Documentation",
-      description: "Documentation for your Express API",
+      description: "Documentation API",
     },
     security: {
       BearerAuth: {

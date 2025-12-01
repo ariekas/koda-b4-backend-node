@@ -56,21 +56,28 @@ export async function create(data) {
 }
 
 export async function updateProfile(data, id, imagePath) {
+  const { fullname, email, password, phone, address } = data;
+  const hash = await bcrypt.hash(password, 10);
+
+  const userData = {};
+  if (fullname) userData.fullname = fullname;
+  if (email) userData.email = email;
+  if (password) userData.password = hash;
+
+  const profileData = {};
+  if (phone) profileData.phone = phone;
+  if (address) profileData.address = address;
+  if (imagePath) profileData.pic = imagePath;
+
   return await prisma.user.update({
     where: { id: Number(id) },
     data: {
-      ...(data.user || {}), 
-
-      ...(data.profile || imagePath
-        ? {
-            profile: {
-              update: {
-                ...(data.profile || {}),
-                ...(imagePath && { pic: imagePath }), 
-              },
-            },
-          }
-        : {}),
+      ...(Object.keys(userData).length > 0 && userData),
+      ...(Object.keys(profileData).length > 0 && {
+        profile: {
+          update: profileData,
+        },
+      }),
     },
   });
 }
