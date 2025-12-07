@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createProduct, deleteProduct, editProduct, getAll, getDetail, uploadImageProduct } from "../controllers/admin/product.js";
 import { createCategory, deleteCategory, detailCategory, editCategory, listCategory } from "../controllers/admin/category.js";
 import { createDiscount, listDiscount, getDetailDiscount, editDiscount, deleteDiscount } from "../controllers/admin/discount.js";
-import { detailUser, listUser, updateRoleUser } from "../controllers/admin/users.js";
+import { detailUser, listUser, sendUserInactive, updateRoleUser } from "../controllers/admin/users.js";
 import upload from "../lib/middelware/uploadimage.js";
 import { caching } from "../lib/middelware/caching.js"
 import { getListTransactions, updateStatusTransaction } from "../controllers/admin/transaction.js";
@@ -13,6 +13,7 @@ const router = Router()
 router.patch("/user/role/:id", updateRoleUser)
 router.get("/users",caching(15), listUser)
 router.get("/user/:id", detailUser)
+router.get("/send-message/user", sendUserInactive)
 
 router.post("/product", createProduct)
 router.get("/products",caching(15), getAll)

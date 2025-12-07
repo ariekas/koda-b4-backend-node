@@ -1,6 +1,6 @@
 import pagination from "../../lib/config/pagination.js";
 import { invalidateCache } from "../../lib/middelware/invalidatecache.js";
-import { list, updateRole, detail } from "../../repositorys/users.js";
+import { list, updateRole, detail, getUserInactive } from "../../repositorys/users.js";
 
 const pathRedis = "cache:/admin/user*"
 
@@ -136,3 +136,23 @@ export async function listUser(req, res) {
           });
     }
 }
+
+  export async function sendUserInactive(req, res) {
+    try {
+      const total = await getUserInactive(); 
+
+      console.log(total)
+  
+      return res.json({
+        success: true,
+        message: "Check inactive users done",
+        totalDeactivated: total,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+  
