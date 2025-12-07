@@ -3,6 +3,7 @@ import {
   create,
   saveOtp,
   resetPassword,
+  updateLastLogin,
 } from "../repositorys/users.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -92,6 +93,8 @@ export async function login(req, res) {
       });
       return;
     }
+
+    await updateLastLogin(user.id);
 
     const token = jwt.sign( {
       id: user.id,

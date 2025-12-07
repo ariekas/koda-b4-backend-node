@@ -1,5 +1,6 @@
 import prisma from "../lib/config/connect.js";
 import bcrypt from "bcrypt";
+import { sendToEmail } from "../lib/config/sendopt.js";
 
 export async function list(page, limit) {
   const skip = (page -1) * limit
@@ -104,4 +105,50 @@ export async function resetPassword(email, newPassword) {
       otpExpires: null
     }
   })
+}
+
+export async function updateLastLogin(userId) {
+  return await prisma.user.update({
+    where: { id: Number(userId) },
+    data: { lastLogin: new Date(), isActive: true },
+  });
+}
+
+export async function getUserInactive() {
+  try {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const inactiveUsers = await prisma.user.findMany({
+      where: {
+        lastLogin: { lt: sevenDaysAgo },
+        isActive: true,
+      },
+    });
+
+    console.log(sevenDaysAgo)
+
+    for (const user of inactiveUsers) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { isActive: false },
+      });
+
+      await sendToEmail.sendMail({
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: "Kami Merindukanmu! Ayo Berbelanja Kembali 🎁",
+        html: `
+          <h3>Halo ${user.fullname}</h3>
+          <p>Kami melihat sudah lebih dari 7 hari sejak terakhir kali kamu login.</p>
+          <p>Yuk kembali dan nikmati promo menarik dari kami!</p>
+        `,
+      });
+    }
+
+    return inactiveUsers.length;
+  } catch (error) {
+    console.error("Error getUserInactive:", error.message);
+    throw new Error(error.message);
+  }
 }
