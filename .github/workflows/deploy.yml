@@ -44,6 +44,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ~/server-express
-            docker compose pull backend_app_express
-            docker compose up backend_app_express -d
+            docker compose pull backend
+            docker compose up backend -d
             docker image prune -af --filter "until=24h"
