@@ -32,9 +32,6 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/backend-express:latest
             ghcr.io/${{ github.repository_owner }}/backend-express:${{ github.ref_name }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/backend-express:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/backend-express:buildcache,mode=max
-
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
         with:
