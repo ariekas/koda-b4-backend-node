@@ -66,8 +66,8 @@ export async function getProfile(req, res) {
 
 /**
  * @typedef {object} UserProfileInput
- * @property {string} fullname.required - Fullname of user
- * @property {string} email.required - Email of user
+ * @property {string} fullname - Fullname of user
+ * @property {string} email - Email of user
  * @property {string} password - Password (optional)
  * @property {string} phone - Phone number (optional)
  * @property {string} address - Address (optional)
